@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<h1>Доступные комнаты и их расписание</h1>
+
+{% for room in rooms %}
+<div class="card">
+    <h3>{{ room.name }}</h3>
+    <p>{{ room.description }}</p>
+    <a href="{{ url_for('book_room', room_id=room.id) }}" class="btn">Забронировать</a>
+
+    <h4>Текущие бронирования:</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Время</th>
+                <th>Кто забронировал</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set has_bookings = false %}
+            {% for booking in bookings %}
+            {% if booking.room_id == room.id %}
+            {% set has_bookings = true %}
+            <tr>
+                <td>{{ booking.booking_date }}</td>
+                <td>с {{ booking.start_time }} до {{ booking.end_time }}</td>
+                <td>{{ booking.username }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+            {% if not has_bookings %}
+            <tr>
+                <td colspan="3">Бронирований пока нет.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endfor %}
+{% endblock %}

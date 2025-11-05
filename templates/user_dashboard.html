@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Мои бронирования{% endblock %}
+
+{% block content %}
+<h1>Мои бронирования</h1>
+{% if bookings %}
+<table>
+    <thead>
+        <tr>
+            <th>Комната</th>
+            <th>Дата</th>
+            <th>Время</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.room_name }}</td>
+            <td>{{ booking.booking_date }}</td>
+            <td>с {{ booking.start_time }} до {{ booking.end_time }}</td>
+            <td>
+                <form action="{{ url_for('cancel_booking', booking_id=booking.id) }}" method="post"
+                    style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Отменить</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>У вас пока нет активных бронирований.</p>
+{% endif %}
+{% endblock %}
