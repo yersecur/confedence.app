@@ -16,7 +16,7 @@
 
 ### Клонируйте репозиторий:
 ```bash
-git clone https://github.com/yourusername/room-booking.git
+git clone https://github.com/yersecur/room-booking.git
 cd room-booking
 ```
 
